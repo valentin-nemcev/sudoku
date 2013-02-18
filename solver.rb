@@ -79,7 +79,6 @@ class Problem
         minidx.nil? || (ds.length < @cells[minidx].length) ? i : minidx
       end
     end
-    # @cells.index{ |ds| ds.length > 1 }
   end
 
   def solve
@@ -130,17 +129,20 @@ solutions = [
   '354186927298743615167952483481527369932614578576398241729865134845231796613479852',
 ]
 
-problems = File.readlines('examples/top95.txt').map{ |s| s.slice(0, 9*9) }
-solutions = File.readlines('examples/top95solutions.txt').map{ |s| s.slice(0, 9*9) }
+# problems = File.readlines('examples/top95.txt').map{ |s| s.slice(0, 9*9) }
+# solutions = File.readlines('examples/top95solutions.txt').map{ |s| s.slice(0, 9*9) }
 
 # problems = File.readlines('examples/hardest.txt').map{ |s| s.slice(0, 9*9) }
 # solutions = []
 
-task = (problems).zip(solutions).first(5)
+problems = ARGF.readlines.map{ |s| s.slice(0, 9*9) }
+solutions = []
+
+task = (problems).zip(solutions)
 
 require 'benchmark'
 bms = task.map do |problem, solution|
-  puts problem
+  # puts problem
   s = nil
   bm = Benchmark.measure { s = Problem.new(problem).solve }
   puts s
@@ -153,7 +155,7 @@ bms = task.map do |problem, solution|
   bm
 end
 
-puts 'Mean ' + bms.map(&:total).sort[bms.size/2].to_s
-puts 'Average ' + (bms.inject(:+) / bms.size).total.to_s
-puts 'Total ' + bms.inject(:+).total.to_s
+# puts 'Mean ' + bms.map(&:total).sort[bms.size/2].to_s
+# puts 'Average ' + (bms.inject(:+) / bms.size).total.to_s
+# puts 'Total ' + bms.inject(:+).total.to_s
 
